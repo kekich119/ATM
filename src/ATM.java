@@ -1,4 +1,5 @@
 
+import java.sql.SQLException;
 import java.util.Random;
 
 public class ATM {
@@ -6,14 +7,17 @@ public class ATM {
     public String password = "admin";
 
 
-    public void register(String namez, String password) {
-
+    public void register(String namez, String password) throws SQLException, ClassNotFoundException {
+        DataBase dataBase = new DataBase();
+        dataBase.ConDB();
         setPassword(password);
         if (namez.equals(getName())) {
             login(namez, password);
         } else {
             setName(namez);
             System.out.println("Вы вошли в систему как " + getName());
+            DataBase.WriteDb(getName());
+            DataBase.close();
 
             Card card = new Card();
             card.setNumberCard(getRandom());
@@ -44,6 +48,10 @@ public class ATM {
 
     void setPassword(String password) {
         this.password = password;
+    }
+
+    public static void checkProfile(){
+
     }
 
 
