@@ -10,8 +10,15 @@ public class Card {
     }
 
 
-    public void setNumberCard(int numberCard) {
-        this.numberCard = numberCard;
+
+
+    public void setNumberCard() {
+        this.numberCard = getRandom();
+    }
+
+    int getRandom() {
+        Random ran = new Random();
+        return ran.nextInt(111, 999);
     }
 
     public int getBalance(){

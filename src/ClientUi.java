@@ -15,7 +15,7 @@ public class ClientUi {
         System.out.print("Введите имя: ");
         String name = in.nextLine();
 
-        System.out.print("Введите пароль: ");
+        System.out.print("Введите PIN-KODE: ");
         String pass = in.nextLine();
 
         atm.register(name, pass);

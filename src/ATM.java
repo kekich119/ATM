@@ -1,48 +1,39 @@
 
 import java.sql.SQLException;
-import java.util.Objects;
 import java.util.Random;
 
 public class ATM {
     public String name;
-    public String password;
+    public String pinKode;
 
 
-    public void register(String namez, String password) throws SQLException, ClassNotFoundException {
+    public void register(String namez, String pinKode) throws SQLException, ClassNotFoundException {
         DataBase dataBase = new DataBase();
         dataBase.ConDB();
-        setPassword(password);
+        setPinKode(pinKode);
         dataBase.ReadDb();
         setName(namez);
-        for (String s : dataBase.listName) {
-            if (namez.equals(s)) {
+        for (int i = 0; i < dataBase.listName.size(); i++) {
+            String s = dataBase.listName.get(i);
+            String k = dataBase.listKode.get(i);
+            if (namez.equals(s) && pinKode.equals(k)) {
                 System.out.println("У вас уже есть аккаунт");
+                login(namez, pinKode);
                 DataBase.close();
                 return;
             }
         }
 
-            DataBase.WriteDb(getName());
+            Card card = new Card();
+            card.setNumberCard();
+            DataBase.WriteDb(getName(), pinKode, String.valueOf(card.getNumberCard()));
             System.out.println("Вы вошли в систему как " + getName());
-                Card card = new Card();
-                card.setNumberCard(getRandom());
-                System.out.println("Ваш номер карты: " + card.numberCard);
+                System.out.println("Ваш номер карты: " + card.getNumberCard());
                 DataBase.close();
         }
 
 
 
-
-
-
-
-
-
-
-    int getRandom() {
-        Random ran = new Random();
-        return ran.nextInt(111, 999);
-    }
 
 
     void setName(String name) {
@@ -55,13 +46,14 @@ public class ATM {
     }
 
     public void login(String name, String password) {
-        setPassword(password);
-        System.out.println("Вы: " + name);
+        setPinKode(password);
+        System.out.println("Вы были перенаправлены в раздел входа");
+
     }
 
 
-    void setPassword(String password) {
-        this.password = password;
+    void setPinKode(String pinKode) {
+        this.pinKode = pinKode;
     }
 
 
