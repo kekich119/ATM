@@ -1,4 +1,6 @@
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class DataBase {
@@ -6,6 +8,9 @@ public class DataBase {
     public static Statement statmt;
     public static ResultSet resSet;
     public static String jdbcPath ="jdbc:sqlite:AccountDB.db";
+    List<String> listName = new ArrayList<>();
+
+
 
     public void ConDB() throws ClassNotFoundException, SQLException {
         conn = null;
@@ -34,13 +39,13 @@ public class DataBase {
     }
 
 
-    public static String ReadDb() throws SQLException {
-        resSet = statmt.executeQuery("SELECT * FORM clientsAccounts");
+    public void ReadDb() throws SQLException {
+        resSet = statmt.executeQuery("SELECT * FROM clientsAccounts");
+
         while (resSet.next()){
             String name = resSet.getString("name");
-            return name;
+            listName.add(name);
         }
-        return null;
     }
 
 
