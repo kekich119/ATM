@@ -21,4 +21,11 @@ public class Card {
     public int getNumberCard(){
         return numberCard;
     }
+
+
+
+
+
+
+
 }

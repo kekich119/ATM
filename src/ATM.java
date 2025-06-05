@@ -1,7 +1,5 @@
-import java.net.PasswordAuthentication;
-import java.util.Objects;
+
 import java.util.Random;
-import java.util.Scanner;
 
 public class ATM {
     public String name = "admin";
