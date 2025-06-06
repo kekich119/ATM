@@ -10,8 +10,6 @@ public class Card {
     }
 
 
-
-
     public void setNumberCard() {
         this.numberCard = getRandom();
     }
@@ -21,18 +19,13 @@ public class Card {
         return ran.nextInt(111, 999);
     }
 
-    public int getBalance(){
+    public int getBalance() {
         return balance;
     }
 
-    public int getNumberCard(){
+    public int getNumberCard() {
         return numberCard;
     }
-
-
-
-
-
 
 
 }

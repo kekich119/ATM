@@ -8,8 +8,10 @@ public class DataBase {
     public static Statement statmt;
     public static ResultSet resSet;
     public static String jdbcPath = "jdbc:sqlite:AccountDB.db";
+
     List<String> listName = new ArrayList<>();
     List<String> listKode = new ArrayList<>();
+    List<Integer> listBalance = new ArrayList<>();
 
 
     public void ConDB() throws ClassNotFoundException, SQLException {
@@ -22,13 +24,14 @@ public class DataBase {
         }
     }
 
-    public static void WriteDb(String name, String pinKode, String numberCard) throws SQLException {
+    public static void WriteDb(String name, String pinKode, String numberCard, int balance) throws SQLException {
         PreparedStatement prepStmt = conn.prepareStatement(
-                "INSERT INTO clients (name, pinKode, numberCard) VALUES (?, ?, ?);"
+                "INSERT INTO clients (name, pinKode, numberCard, balance) VALUES (?, ?, ?, ?);"
         );
         prepStmt.setString(1, name);
         prepStmt.setString(2, pinKode);
         prepStmt.setString(3, numberCard);
+        prepStmt.setInt(4, balance);
         prepStmt.executeUpdate();
         prepStmt.close();
     }
@@ -48,9 +51,24 @@ public class DataBase {
             listName.add(name);
             String pinKode = resSet.getString("pinKode");
             listKode.add(pinKode);
+
+
         }
+
     }
 
-
+    public int getBalanceByName(String name) throws SQLException {
+        String query = "SELECT balance FROM clients WHERE name = ? ";
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, name);
+            try (ResultSet resultSet = stmt.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt("balance");
+                } else {
+                    throw new SQLException("Пользователь не найден");
+                }
+            }
+        }
+    }
 }
 

@@ -1,4 +1,6 @@
 
+import org.slf4j.spi.CallerBoundaryAware;
+
 import java.sql.SQLException;
 import java.util.Random;
 
@@ -24,16 +26,15 @@ public class ATM {
             }
         }
 
-            Card card = new Card();
-            card.setNumberCard();
-            DataBase.WriteDb(getName(), pinKode, String.valueOf(card.getNumberCard()));
-            System.out.println("Вы вошли в систему как " + getName());
-                System.out.println("Ваш номер карты: " + card.getNumberCard());
-                DataBase.close();
-        }
-
-
-
+        Card card = new Card();
+        card.setNumberCard();
+        setName(namez);
+        DataBase.WriteDb(getName(), pinKode, String.valueOf(card.getNumberCard()), card.getBalance());
+        System.out.println("Вы вошли в систему как " + getName());
+        System.out.println("Ваш номер карты: " + card.getNumberCard());
+        DataBase.close();
+        ClientUi.mainMenu(this );
+    }
 
 
     void setName(String name) {
@@ -47,7 +48,7 @@ public class ATM {
 
     public void login(String name, String password) {
         setPinKode(password);
-        System.out.println("Вы были перенаправлены в раздел входа");
+
 
     }
 
@@ -55,6 +56,25 @@ public class ATM {
     void setPinKode(String pinKode) {
         this.pinKode = pinKode;
     }
+
+
+
+    public void getInfo() throws ClassNotFoundException {
+
+        try {
+            DataBase dataBase = new DataBase();
+            dataBase.ConDB();
+
+            int balance = dataBase.getBalanceByName(name);
+            System.out.println("Ваш баланс: " +  balance + ".руб");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+    }
+
+
 
 
 }
