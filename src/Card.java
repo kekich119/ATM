@@ -1,7 +1,7 @@
 import java.util.Random;
 
 public class Card {
-    int balance;
+    int balance ;
     int numberCard;
 
 

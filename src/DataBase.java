@@ -70,5 +70,26 @@ public class DataBase {
             }
         }
     }
+
+
+    public void updateBalanceByName(String name, int newBalance) {
+        String query = "UPDATE clients SET balance = ? WHERE name = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, newBalance + getBalanceByName(name));
+            stmt.setString(2, name);
+            int affectedRows = stmt.executeUpdate();
+            if (affectedRows == 0) {
+                throw new SQLException("Пользователь не найден");
+            }
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+    }
+
+
 }
 

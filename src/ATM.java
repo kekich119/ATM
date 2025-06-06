@@ -20,7 +20,7 @@ public class ATM {
             String k = dataBase.listKode.get(i);
             if (namez.equals(s) && pinKode.equals(k)) {
                 System.out.println("У вас уже есть аккаунт");
-                login(namez, pinKode);
+                ClientUi.mainMenu(this);
                 DataBase.close();
                 return;
             }
@@ -33,7 +33,7 @@ public class ATM {
         System.out.println("Вы вошли в систему как " + getName());
         System.out.println("Ваш номер карты: " + card.getNumberCard());
         DataBase.close();
-        ClientUi.mainMenu(this );
+        ClientUi.mainMenu(this);
     }
 
 
@@ -47,7 +47,6 @@ public class ATM {
     }
 
     public void login(String name, String password) {
-        setPinKode(password);
 
 
     }
@@ -58,7 +57,6 @@ public class ATM {
     }
 
 
-
     public void getInfo() throws ClassNotFoundException {
 
         try {
@@ -66,7 +64,7 @@ public class ATM {
             dataBase.ConDB();
 
             int balance = dataBase.getBalanceByName(name);
-            System.out.println("Ваш баланс: " +  balance + ".руб");
+            System.out.println("Ваш баланс: " + balance + ".руб");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -74,6 +72,12 @@ public class ATM {
 
     }
 
+
+    public void refill (String name, int balance) throws SQLException, ClassNotFoundException {
+        DataBase dataBase = new DataBase();
+        dataBase.ConDB();
+        dataBase.updateBalanceByName(name, balance);
+    }
 
 
 

@@ -21,15 +21,20 @@ public class ClientUi {
         atm.register(name, pass);
     }
 
-    public static void mainMenu(ATM atm) throws ClassNotFoundException {
+    public static void mainMenu(ATM atm) throws ClassNotFoundException, SQLException {
         Scanner in = new Scanner(System.in);
         System.out.println("Добро пожаловать, " + atm.getName());
         System.out.println("Вы можете узнать информацию о вашем аккаунте");
         System.out.println("1. Узнать баланс 2. Пополнить счёт 3. Узнать номер карты 4. Вывести средства");
         int choose = in.nextInt();
 
-        if (choose == 1){
+        if (choose == 1) {
             atm.getInfo();
+        }
+        if (choose == 2) {
+            System.out.println("На сколько вы хотите пополнить баланс?");  //Добавить ограничение на пополнение
+            int newBalance = in.nextInt();
+            atm.refill(atm.getName(), newBalance);
         }
 
 
