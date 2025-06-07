@@ -17,8 +17,14 @@ public class ClientUi {
 
         System.out.print("Введите PIN-KODE: ");
         String pass = in.nextLine();
+        if (name.length()<8 && name.length() > 4){
+            atm.register(name, pass);
 
-        atm.register(name, pass);
+        }else {
+            System.out.println("Вы указали неправильное имя, оно меньше 4 букв или больше 8");
+            System.out.println("Повторите попытку позже");
+        }
+
     }
 
     public static void mainMenu(ATM atm) throws ClassNotFoundException, SQLException {
